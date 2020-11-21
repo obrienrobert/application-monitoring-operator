@@ -11,9 +11,7 @@ spec:
   externalUrl: https://{{ index .ExtraParams "alertmanagerHost" }}
   listenLocal: true
   serviceAccountName: {{ .AlertManagerServiceAccountName }}
-{{- if .Affinity }}
-  replicas: 3
-{{- end }}
+  replicas: {{ .Replicas }}
   containers:
     - args:
         - '-provider=openshift'

@@ -8,9 +8,7 @@ metadata:
 spec:
   baseImage: {{ .ImagePrometheus }}
   tag: "{{ .ImageTagPrometheus }}"
-{{- if .Affinity }}
-  replicas: 3
-{{- end }}
+  replicas: {{ .Replicas }}
   containers:
     - name: blackbox-exporter
       volumeMounts:

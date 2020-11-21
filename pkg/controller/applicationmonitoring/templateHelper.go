@@ -101,6 +101,7 @@ type Parameters struct {
 	PrometheusInstanceNamespaces     string
 	AlertmanagerInstanceNamespaces   string
 	Affinity                         string
+	Replicas                         int
 	ExtraParams                      map[string]string
 }
 
@@ -165,6 +166,7 @@ func newTemplateHelper(cr *applicationmonitoring.ApplicationMonitoring, extraPar
 		PrometheusInstanceNamespaces:     cr.Spec.PrometheusInstanceNamespaces,
 		AlertmanagerInstanceNamespaces:   cr.Spec.AlertmanagerInstanceNamespaces,
 		Affinity:                         PopulateAffinityRule(cr.Spec.Affinity),
+		Replicas:                         RequiredNumberOfReplicas(cr.Spec.Replicas),
 		ExtraParams:                      extraParams,
 	}
 
@@ -257,4 +259,16 @@ func PopulateAffinityRule(affinity *corev1.Affinity) string {
 	}
 
 	return string(affinityRule)
+}
+
+// RequiredNumberOfReplicas returns the number of required
+// replicas depending on if affinity is specified or not
+func RequiredNumberOfReplicas(replicas int) int {
+	// Return 1 replica if the spec value is empty
+	if replicas == 0 {
+		return 1
+	}
+
+	// Return the number of replicas specified in the spec
+	return replicas
 }

@@ -24,6 +24,7 @@ type ApplicationMonitoringSpec struct {
 	AlertmanagerInstanceNamespaces   string           `json:"alertmanagerInstanceNamespaces,omitempty"`
 	SelfSignedCerts                  bool             `json:"selfSignedCerts,omitempty"`
 	Affinity                         *corev1.Affinity `json:"affinity,omitempty"`
+	Replicas                         int              `json:"replicas,omitempty"`
 }
 
 // ApplicationMonitoringStatus defines the observed state of ApplicationMonitoring
